@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅遊行程規劃 - 首頁</title>
+    <title>我的首頁</title>
     <style>
         * {
             margin: 0;
@@ -22,13 +22,75 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             animation: fadeIn 0.6s ease;
+        }
+        
+        /* 分頁標籤樣式 */
+        .tabs-container {
+            background: white;
+            padding: 20px 40px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 3px solid #e0e0e0;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .tabs::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+        }
+        
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+            white-space: nowrap;
+            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
+        }
+        
+        .tab-button:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         @keyframes fadeIn {
@@ -50,7 +112,7 @@
         }
         
         header h1 {
-            font-size: 3em;
+            font-size: 3.5em;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
@@ -185,11 +247,31 @@
 <body>
     <div class="container">
         <header>
-            <h1>🌏 旅遊行程規劃</h1>
-            <p>探索台灣之美，創造美好回憶</p>
+            <h1>✨ 我的首頁</h1>
+            <p>記錄生活的美好時光</p>
         </header>
         
+        <!-- 分頁標籤 -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('travel')">
+                    🌏 旅遊
+                </button>
+                <button class="tab-button" onclick="switchTab('work')">
+                    💼 工作
+                </button>
+                <button class="tab-button" onclick="switchTab('life')">
+                    🏡 生活
+                </button>
+                <button class="tab-button" onclick="switchTab('study')">
+                    📚 學習
+                </button>
+            </div>
+        </div>
+        
         <div class="content">
+            <!-- 旅遊分頁 -->
+            <div id="travel" class="tab-content active">
             <a href="travel-itinerary.html" class="trip-card">
                 <h2>
                     <span class="icon">🌸</span>
@@ -241,13 +323,68 @@
                     <p>更多精彩的旅遊行程正在規劃中，敬請期待！</p>
                 </div>
             </div>
+            </div>
+            
+            <!-- 工作分頁 -->
+            <div id="work" class="tab-content">
+                <div style="text-align: center; padding: 60px 20px; color: #666;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">💼</div>
+                    <h2 style="font-size: 2em; margin-bottom: 15px; color: #667eea;">工作專區</h2>
+                    <p style="font-size: 1.2em;">工作相關內容即將推出...</p>
+                </div>
+            </div>
+            
+            <!-- 生活分頁 -->
+            <div id="life" class="tab-content">
+                <div style="text-align: center; padding: 60px 20px; color: #666;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">🏡</div>
+                    <h2 style="font-size: 2em; margin-bottom: 15px; color: #667eea;">生活記錄</h2>
+                    <p style="font-size: 1.2em;">生活點滴記錄即將推出...</p>
+                </div>
+            </div>
+            
+            <!-- 學習分頁 -->
+            <div id="study" class="tab-content">
+                <div style="text-align: center; padding: 60px 20px; color: #666;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">📚</div>
+                    <h2 style="font-size: 2em; margin-bottom: 15px; color: #667eea;">學習筆記</h2>
+                    <p style="font-size: 1.2em;">學習紀錄與筆記即將推出...</p>
+                </div>
+            </div>
         </div>
         
         <footer>
-            <p>💡 每個行程都經過精心規劃，包含詳細時間、地點與 Google 地圖導航連結</p>
+            <p>✨ 記錄生活的每一刻，留下美好的回憶</p>
             <p>🎨 響應式設計，支援手機、平板與電腦瀏覽</p>
-            <p style="margin-top: 15px; opacity: 0.7;">© 2026 旅遊行程規劃</p>
+            <p style="margin-top: 15px; opacity: 0.7;">© 2026 我的首頁</p>
         </footer>
     </div>
+    
+    <script>
+        // 分頁切換功能
+        function switchTab(tabId) {
+            // 移除所有 active class
+            const allTabs = document.querySelectorAll('.tab-content');
+            const allButtons = document.querySelectorAll('.tab-button');
+            
+            allTabs.forEach(tab => tab.classList.remove('active'));
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // 添加 active class 到選中的標籤
+            document.getElementById(tabId).classList.add('active');
+            
+            // 添加 active class 到對應的按鈕
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach((btn, index) => {
+                const tabMap = ['travel', 'work', 'life', 'study'];
+                if (tabMap[index] === tabId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 滾動到頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
