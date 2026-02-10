@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             min-height: 100vh;
             padding: 20px;
         }
@@ -22,16 +22,17 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #2c2c2c;
             color: white;
             padding: 40px;
             text-align: center;
+            border-bottom: 3px solid #667eea;
         }
         
         header h1 {
@@ -74,18 +75,20 @@
         }
         
         .location-card {
-            background: #f8f9fa;
-            border-radius: 15px;
+            background: white;
+            border-radius: 0;
             padding: 20px;
             margin-bottom: 15px;
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border-left: 3px solid #e0e0e0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
         }
         
         .location-card:hover {
-            transform: translateX(10px);
-            border-color: #667eea;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+            border-left-color: #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
         
         .location-header {
@@ -95,10 +98,10 @@
         }
         
         .time-badge {
-            background: #667eea;
+            background: #2c2c2c;
             color: white;
             padding: 5px 15px;
-            border-radius: 20px;
+            border-radius: 0;
             font-size: 0.9em;
             font-weight: bold;
             margin-right: 15px;
@@ -135,25 +138,27 @@
             text-decoration: none;
             font-weight: 500;
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 0;
             transition: all 0.2s ease;
-            background: rgba(102, 126, 234, 0.1);
+            background: #f5f5f5;
             font-size: 0.9em;
+            border: 1px solid #e0e0e0;
         }
         
         .map-link:hover {
-            background: rgba(102, 126, 234, 0.2);
-            transform: scale(1.05);
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
         }
         
         .note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background: #f9f9f9;
+            border-left: 3px solid #bdbdbd;
             padding: 10px 15px;
             margin-left: 115px;
-            border-radius: 5px;
+            border-radius: 0;
             font-size: 0.9em;
-            color: #856404;
+            color: #666;
         }
         
         .note::before {
@@ -162,8 +167,8 @@
         }
         
         .accommodation {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
+            background: white;
+            border-left: 3px solid #2c2c2c;
         }
         
         .accommodation .location-name::before {
@@ -171,8 +176,8 @@
         }
         
         .restaurant {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
+            background: white;
+            border-left: 3px solid #757575;
         }
         
         .restaurant .location-name::before {
@@ -186,13 +191,14 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e0e0e0;
         }
         
         .tabs {
             display: flex;
-            gap: 10px;
-            border-bottom: 3px solid #e0e0e0;
+            gap: 0;
+            border-bottom: 2px solid #e0e0e0;
             overflow-x: auto;
             scrollbar-width: thin;
         }
@@ -211,25 +217,25 @@
             border: none;
             padding: 15px 30px;
             font-size: 1.1em;
-            font-weight: bold;
-            color: #666;
+            font-weight: 500;
+            color: #9e9e9e;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -3px;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
             white-space: nowrap;
             font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
         }
         
         .tab-button:hover {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
+            color: #2c2c2c;
+            background: #f9f9f9;
         }
         
         .tab-button.active {
-            color: #667eea;
+            color: #2c2c2c;
             border-bottom-color: #667eea;
-            background: rgba(102, 126, 234, 0.05);
+            background: white;
         }
         
         .tab-content {
@@ -261,27 +267,31 @@
         }
         
         .overview-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: white;
+            color: #2c2c2c;
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            border-top: 3px solid #667eea;
         }
         
         .overview-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-top-color: #2c2c2c;
         }
         
         .overview-card h3 {
             font-size: 1.8em;
             margin-bottom: 10px;
+            color: #2c2c2c;
         }
         
         .overview-card p {
-            opacity: 0.9;
+            color: #666;
             font-size: 1em;
             margin: 5px 0;
         }
@@ -290,6 +300,7 @@
             font-size: 2em;
             font-weight: bold;
             margin-top: 15px;
+            color: #667eea;
         }
         
         footer {
@@ -374,9 +385,9 @@
                 <div class="overview-grid">
                     <div class="overview-card" onclick="switchTab('day1')">
                         <h3>第一天</h3>
-                        <p>📍 新竹 → 宜蘭</p>
-                        <p>⏱️ 08:00 - 20:30</p>
-                        <div class="spot-count">7 個景點</div>
+                        <p>📍 彰化福興 → 宜蘭</p>
+                        <p>⏱️ 07:30 - 20:30</p>
+                        <div class="spot-count">8 個景點</div>
                     </div>
                     
                     <div class="overview-card" onclick="switchTab('day2')">
@@ -410,14 +421,17 @@
             <!-- 第一天 -->
             <div id="day1" class="tab-content">
             <div class="day-section">
-                <h2 class="day-title">第一天 - 新竹 → 宜蘭（櫻花與文創之旅）</h2>
+                <h2 class="day-title">第一天 - 彰化福興 → 宜蘭（櫻花與文創之旅）</h2>
                 
                 <div class="location-card">
                     <div class="location-header">
-                        <span class="time-badge">08:00</span>
-                        <span class="location-name">出發</span>
+                        <span class="time-badge">07:30</span>
+                        <span class="location-name">彰化福興出發</span>
                     </div>
-                    <div class="note">從家裡啟程，開始美好的旅程！建議週末提早出發避開國五雪隧車潮</div>
+                    <div class="location-address">
+                        <span>彰化縣福興鄉新生路 40-3 號</span>
+                    </div>
+                    <div class="note">從彰化福興啟程，開始美好的旅程！建議提早出發避開國五雪隧車潮</div>
                 </div>
                 
                 <div class="location-card">
@@ -426,10 +440,18 @@
                         <span class="location-name">關西服務區</span>
                     </div>
                     <div class="location-address">
-                        <span>國道三號北上</span>
+                        <span>國道三號</span>
                         <a href="https://www.google.com/maps/search/?api=1&query=關西服務區" target="_blank" class="map-link">🗺️ 導航</a>
                     </div>
-                    <div class="note">休息站，可以休息上廁所，補充能量（停留約30分鐘）</div>
+                    <div class="note">休息 20-30 分鐘，活動筋骨，可以休息上廁所，補充能量</div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="location-header">
+                        <span class="time-badge">10:00</span>
+                        <span class="location-name">繼續前往宜蘭</span>
+                    </div>
+                    <div class="note">經國道 3 號轉國道 5 號前往宜蘭</div>
                 </div>
                 
                 <div class="location-card restaurant">
@@ -438,10 +460,10 @@
                         <span class="location-name">玉仁八寶冬粉 1 號店</span>
                     </div>
                     <div class="location-address">
-                        <span>宜蘭縣礁溪鄉中山路一段 326 號</span>
-                        <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣礁溪鄉中山路一段326號" target="_blank" class="map-link">🗺️ 導航</a>
+                        <span>抵達礁溪享用午餐</span>
+                        <a href="https://www.google.com/maps/search/?api=1&query=玉仁八寶冬粉1號店" target="_blank" class="map-link">🗺️ 導航</a>
                     </div>
-                    <div class="note">午餐時間，宜蘭在地美食，建議提早到避開用餐尖峰（用餐約1小時）</div>
+                    <div class="note">午餐時間，宜蘭在地美食，建議提早到避開用餐尖峰</div>
                 </div>
                 
                 <div class="location-card">
@@ -453,7 +475,7 @@
                         <span>宜蘭縣五結鄉中正路二段 6 之 8 號</span>
                         <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉中正路二段6之8號" target="_blank" class="map-link">🗺️ 導航</a>
                     </div>
-                    <div class="note">文化創意園區，可拍照打卡，免費參觀（停留約1.5小時）</div>
+                    <div class="note">文化創意園區，可拍照打卡，免費參觀（停留約1.5-2小時）</div>
                 </div>
                 
                 <div class="location-card">
@@ -465,7 +487,7 @@
                         <span>宜蘭縣羅東鎮羅莊一街 22 號</span>
                         <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣羅東鎮羅莊一街22號" target="_blank" class="map-link">🗺️ 導航</a>
                     </div>
-                    <div class="note">櫻花季節（1-3月）可欣賞美麗櫻花，平日也適合散步（停留約1.5小時）</div>
+                    <div class="note">櫻花季節（1-3月）可欣賞美麗櫻花，平日也適合散步（停留約1.5-2小時）</div>
                 </div>
                 
                 <div class="location-card restaurant">
@@ -474,8 +496,8 @@
                         <span class="location-name">羅東觀光夜市</span>
                     </div>
                     <div class="location-address">
-                        <span>宜蘭縣羅東鎮興東路與民權路口</span>
-                        <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣羅東鎮興東路民權路口" target="_blank" class="map-link">🗺️ 導航</a>
+                        <span>建議將車停在附近的公共停車場</span>
+                        <a href="https://www.google.com/maps/search/?api=1&query=羅東觀光夜市" target="_blank" class="map-link">🗺️ 導航</a>
                     </div>
                     <div class="note">晚餐在夜市解決！宜蘭最熱鬧的夜市，推薦：包心粉圓、三星蔥餅、羊肉湯、當歸羊肉湯</div>
                 </div>
