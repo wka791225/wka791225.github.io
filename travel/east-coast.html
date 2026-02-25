@@ -4,374 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台灣東部環島三日遊行程</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
-            background: #f5f5f5;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        header {
-            background: #2c2c2c;
-            color: white;
-            padding: 40px;
-            text-align: center;
-            border-bottom: 3px solid #667eea;
-        }
-        
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .day-section {
-            margin-bottom: 50px;
-            border-left: 4px solid #667eea;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .day-section::before {
-            content: '';
-            position: absolute;
-            left: -8px;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            background: #667eea;
-            border-radius: 50%;
-        }
-        
-        .day-title {
-            font-size: 2em;
-            color: #667eea;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        
-        .location-card {
-            background: white;
-            border-radius: 0;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-            border-left: 3px solid #e0e0e0;
-            border-top: 1px solid #f0f0f0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .location-card:hover {
-            transform: translateX(5px);
-            border-left-color: #667eea;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        .location-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .time-badge {
-            background: #2c2c2c;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 0;
-            font-size: 0.9em;
-            font-weight: bold;
-            margin-right: 15px;
-            min-width: 100px;
-            text-align: center;
-        }
-        
-        .location-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #2c3e50;
-            flex: 1;
-        }
-        
-        .location-address {
-            color: #666;
-            margin-left: 115px;
-            margin-bottom: 10px;
-            font-size: 0.95em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .location-address::before {
-            content: '📍 ';
-        }
-        
-        .map-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 0;
-            transition: all 0.2s ease;
-            background: #f5f5f5;
-            font-size: 0.9em;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .map-link:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-        
-        .note {
-            background: #f9f9f9;
-            border-left: 3px solid #bdbdbd;
-            padding: 10px 15px;
-            margin-left: 115px;
-            border-radius: 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .note::before {
-            content: '💡 ';
-            font-weight: bold;
-        }
-        
-        .accommodation {
-            background: white;
-            border-left: 3px solid #2c2c2c;
-        }
-        
-        .accommodation .location-name::before {
-            content: '🏠 ';
-        }
-        
-        .restaurant {
-            background: white;
-            border-left: 3px solid #757575;
-        }
-        
-        .restaurant .location-name::before {
-            content: '🍴 ';
-        }
-        
-        /* 分頁標籤樣式 */
-        .tabs-container {
-            background: white;
-            padding: 20px 40px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 0;
-            border-bottom: 2px solid #e0e0e0;
-            overflow-x: auto;
-            scrollbar-width: thin;
-        }
-        
-        .tabs::-webkit-scrollbar {
-            height: 6px;
-        }
-        
-        .tabs::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 3px;
-        }
-        
-        .tab-button {
-            background: transparent;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            font-weight: 500;
-            color: #9e9e9e;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            white-space: nowrap;
-            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
-        }
-        
-        .tab-button:hover {
-            color: #2c2c2c;
-            background: #f9f9f9;
-        }
-        
-        .tab-button.active {
-            color: #2c2c2c;
-            border-bottom-color: #667eea;
-            background: white;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* 概覽模式 */
-        .overview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .overview-card {
-            background: white;
-            color: #2c2c2c;
-            padding: 25px;
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e0e0e0;
-            border-top: 3px solid #667eea;
-        }
-        
-        .overview-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-top-color: #2c2c2c;
-        }
-        
-        .overview-card h3 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            color: #2c2c2c;
-        }
-        
-        .overview-card p {
-            color: #666;
-            font-size: 1em;
-            margin: 5px 0;
-        }
-        
-        .overview-card .spot-count {
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #667eea;
-        }
-        
-        footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-            }
-            
-            .location-card {
-                page-break-inside: avoid;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .location-address,
-            .note {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-            
-            .location-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .time-badge {
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+    <meta name="description" content="台灣東部環島三日遊：彰化福興出發，途經宜蘭、花蓮、台東，探索自然美景與人文風情。">
+    <link rel="stylesheet" href="../css/travel.css">
 </head>
 <body>
     <div class="container">
+        <a href="../index.html" class="back-link">← 返回首頁</a>
+
         <header>
-            <h1>🌸 台灣東部環島三日遊 🌸</h1>
+            <h1>🌸 台灣東部環島三日遊</h1>
             <p>探索台灣東部的自然美景與人文風情</p>
         </header>
         
         <!-- 分頁標籤 -->
         <div class="tabs-container">
             <div class="tabs">
-                <button class="tab-button active" onclick="switchTab('overview')">
+                <button class="tab-button active" data-tab="overview" onclick="switchTab('overview')">
                     📋 行程概覽
                 </button>
-                <button class="tab-button" onclick="switchTab('day1')">
+                <button class="tab-button" data-tab="day1" onclick="switchTab('day1')">
                     📅 第一天
                 </button>
-                <button class="tab-button" onclick="switchTab('day2')">
+                <button class="tab-button" data-tab="day2" onclick="switchTab('day2')">
                     📅 第二天
                 </button>
-                <button class="tab-button" onclick="switchTab('day3')">
+                <button class="tab-button" data-tab="day3" onclick="switchTab('day3')">
                     📅 第三天
                 </button>
             </div>
@@ -380,7 +37,7 @@
         <div class="content">
             <!-- 行程概覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="font-size: 2em; color: #667eea; margin-bottom: 30px; text-align: center;">🗺️ 三天兩夜行程總覽</h2>
+                <h2 style="font-size: 1.8em; color: #1a1a2e; margin-bottom: 28px; text-align: center; font-weight: 600;">🗺️ 三天兩夜行程總覽</h2>
                 
                 <div class="overview-grid">
                     <div class="overview-card" onclick="switchTab('day1')">
@@ -405,9 +62,9 @@
                     </div>
                 </div>
                 
-                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin-top: 20px;">
-                    <h3 style="color: #667eea; font-size: 1.5em; margin-bottom: 20px;">📌 行程重點提醒</h3>
-                    <ul style="line-height: 2; color: #555; font-size: 1.05em;">
+                <div class="tips-box">
+                    <h3>📌 行程重點提醒</h3>
+                    <ul>
                         <li>🏨 <strong>住宿安排：</strong>第一晚宜蘭五結（伯利恆之星），第二晚台東鹿野（千葉小築民宿）</li>
                         <li>🍴 <strong>美食推薦：</strong>玉仁八寶冬粉、榕樹下米苔目、極鮮火鍋岡山店、羅東夜市小吃</li>
                         <li>🌸 <strong>季節限定：</strong>羅莊櫻花步道（1-3月最美）</li>
@@ -421,7 +78,7 @@
             <!-- 第一天 -->
             <div id="day1" class="tab-content">
             <div class="day-section">
-                <h2 class="day-title">第一天 - 彰化福興 → 宜蘭（櫻花與文創之旅）</h2>
+                <h2 class="day-title">第一天 — 彰化福興 → 宜蘭（櫻花與文創之旅）</h2>
                 
                 <div class="location-card">
                     <div class="location-header">
@@ -519,7 +176,7 @@
             <!-- 第二天 -->
             <div id="day2" class="tab-content">
             <div class="day-section">
-                <h2 class="day-title">第二天 - 宜蘭 → 花蓮 → 台東（縱谷美景之旅）</h2>
+                <h2 class="day-title">第二天 — 宜蘭 → 花蓮 → 台東（縱谷美景之旅）</h2>
                 
                 <div class="location-card">
                     <div class="location-header">
@@ -582,7 +239,7 @@
             <!-- 第三天 -->
             <div id="day3" class="tab-content">
             <div class="day-section">
-                <h2 class="day-title">第三天 - 台東 → 高雄 → 彰化（南迴與火鍋聚餐）</h2>
+                <h2 class="day-title">第三天 — 台東 → 高雄 → 彰化（南迴與火鍋聚餐）</h2>
                 
                 <div class="location-card restaurant">
                     <div class="location-header">
@@ -643,43 +300,10 @@
             <p>⚠️ 旅遊小提醒 ⚠️</p>
             <p>• 建議提前預訂住宿與熱門餐廳 • 注意各景點營業時間 • 準備防曬用品與舒適鞋子</p>
             <p>• 蘇花改與南迴路段較長，備好提神飲料 • 伯朗大道禁止汽車，需租電動自行車 • 祝您旅途愉快！</p>
-            <p style="margin-top: 15px; opacity: 0.7;">製作日期：2026年2月10日 | 終點：彰化</p>
+            <p style="margin-top: 12px; opacity: 0.7;">製作日期：2026年2月10日 | 終點：彰化</p>
         </footer>
     </div>
     
-    <script>
-        // 分頁切換功能
-        function switchTab(tabId) {
-            // 移除所有 active class
-            const allTabs = document.querySelectorAll('.tab-content');
-            const allButtons = document.querySelectorAll('.tab-button');
-            
-            allTabs.forEach(tab => tab.classList.remove('active'));
-            allButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // 添加 active class 到選中的標籤
-            document.getElementById(tabId).classList.add('active');
-            
-            // 添加 active class 到對應的按鈕
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach((btn, index) => {
-                const tabMap = ['overview', 'day1', 'day2', 'day3'];
-                if (tabMap[index] === tabId) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // 滾動到頂部
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // 鍵盤快捷鍵支持
-        document.addEventListener('keydown', function(e) {
-            if (e.key >= '0' && e.key <= '3') {
-                const tabs = ['overview', 'day1', 'day2', 'day3'];
-                switchTab(tabs[parseInt(e.key)]);
-            }
-        });
-    </script>
+    <script src="../js/travel.js"></script>
 </body>
 </html>

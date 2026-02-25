@@ -1,0 +1,315 @@
+/* ========================================
+   main.css — 首頁樣式（簡約乾淨設計）
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+/* === Reset & Base === */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    background: #f8f9fc;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* === Container === */
+.container {
+    max-width: 960px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    animation: pageIn 0.5s ease-out;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Header === */
+header {
+    background: #ffffff;
+    color: #1a1a2e;
+    padding: 56px 48px 40px;
+    text-align: center;
+    border-bottom: 1px solid #eef0f5;
+}
+
+header h1 {
+    font-size: 2.6em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+header p {
+    font-size: 1.1em;
+    color: #8c8c9e;
+    font-weight: 400;
+}
+
+/* === Tabs === */
+.tabs-container {
+    background: #ffffff;
+    padding: 0 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #eef0f5;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 16px 24px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #a0a0b4;
+    cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+.tab-button:hover {
+    color: #555;
+}
+
+.tab-button.active {
+    color: #1a1a2e;
+    border-bottom-color: #5b6abf;
+}
+
+/* === Tab Content === */
+.tab-content {
+    display: none;
+    animation: fadeSlideIn 0.35s ease-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Content Area === */
+.content {
+    padding: 40px 48px 48px;
+}
+
+/* === Trip Card === */
+.trip-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    border: 1px solid #eef0f5;
+}
+
+.trip-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+}
+
+.trip-card h2 {
+    font-size: 1.6em;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.01em;
+}
+
+.trip-card .icon {
+    font-size: 1.15em;
+}
+
+/* === Trip Info Grid === */
+.trip-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95em;
+    color: #6b6b80;
+}
+
+.info-item .emoji {
+    font-size: 1.15em;
+}
+
+/* === Description Block === */
+.description {
+    background: #f8f9fc;
+    padding: 18px 20px;
+    border-radius: 10px;
+    margin-top: 18px;
+    font-size: 0.95em;
+    line-height: 1.85;
+    color: #6b6b80;
+    border-left: 3px solid #d8dce8;
+}
+
+/* === Badge === */
+.badge {
+    display: inline-block;
+    background: #5b6abf;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+}
+
+/* === Coming Soon === */
+.coming-soon {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.coming-soon:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* === Placeholder Tabs === */
+.placeholder-section {
+    text-align: center;
+    padding: 80px 24px;
+    color: #a0a0b4;
+}
+
+.placeholder-section .placeholder-icon {
+    font-size: 3.5em;
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.placeholder-section h2 {
+    font-size: 1.6em;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.placeholder-section p {
+    font-size: 1em;
+    color: #b0b0c0;
+}
+
+/* === Footer === */
+footer {
+    background: #f8f9fc;
+    color: #8c8c9e;
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 0.85em;
+    border-top: 1px solid #eef0f5;
+}
+
+footer p {
+    margin: 4px 0;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    body {
+        padding: 16px 8px;
+    }
+
+    .container {
+        border-radius: 12px;
+    }
+
+    header {
+        padding: 40px 24px 32px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    .tabs-container {
+        padding: 0 16px;
+    }
+
+    .content {
+        padding: 24px 20px;
+    }
+
+    .trip-card {
+        padding: 24px 20px;
+    }
+
+    .trip-card h2 {
+        font-size: 1.3em;
+    }
+
+    .trip-info {
+        grid-template-columns: 1fr;
+    }
+}

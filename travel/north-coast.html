@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北海岸平溪兩天一夜行程規劃</title>
+  <meta name="description" content="北海岸與平溪兩天一夜行程：野柳地質公園、平溪放天燈、基隆廟口夜市、正濱漁港彩色屋。">
+  <link rel="stylesheet" href="../css/travel.css">
+</head>
+
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">← 返回首頁</a>
+
+    <header>
+      <h1>🌊 北海岸與平溪之行 🏮</h1>
+      <p>地質奇觀、海洋文化與山城天燈的兩天一夜旅程</p>
+    </header>
+
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab-button active" data-tab="overview" onclick="switchTab('overview')">📋 行程概覽</button>
+        <button class="tab-button" data-tab="day1" onclick="switchTab('day1')">📅 第一天</button>
+        <button class="tab-button" data-tab="day2" onclick="switchTab('day2')">📅 第二天</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="overview" class="tab-content active">
+        <h2 style="font-size: 1.8em; color: #1a1a2e; margin-bottom: 28px; text-align: center; font-weight: 600;">🗺️
+          兩天一夜行程總覽</h2>
+        <div class="overview-grid">
+          <div class="overview-card" onclick="switchTab('day1')">
+            <h3>第一天：山海願景</h3>
+            <p>📍 野柳 → 平溪 → 基隆</p>
+            <p>⏱️ 05:00 - 20:00</p>
+            <p class="highlight">包含：女王頭、海洋世界、放天燈</p>
+          </div>
+          <div class="overview-card" onclick="switchTab('day2')">
+            <h3>第二天：打卡返家</h3>
+            <p>📍 基隆市區 → 正濱漁港</p>
+            <p>⏱️ 09:00 - 11:00</p>
+            <p class="highlight">包含：彩色屋、直航回中</p>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <h3>📌 行前重點提示</h3>
+          <ul>
+            <li>🚗 <strong>出發時間：</strong>清晨 5-7 點出發，可避開北部國道尖峰時段。</li>
+            <li>🏠 <strong>住宿點：</strong>基隆市中正區信一路 177 號（鄰近廟口夜市）。</li>
+            <li>🏮 <strong>平溪活動：</strong>建議在 17:00 前完成施放天燈，天色微暗時氛圍最佳。</li>
+            <li>📸 <strong>拍照必去：</strong>正濱漁港彩色屋建議停「正濱漁港停車場」步行 3 分鐘。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="day1" class="tab-content">
+        <div class="day-section">
+          <h2 class="day-title">第一天 — 啟程與奇觀</h2>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">05:00-07:00</span>
+              <span class="location-name">開車出發</span>
+            </div>
+            <div class="note">從家中啟程前往北海岸，建議在關西或中壢休息站稍作停留。</div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">09:00-11:00</span>
+              <span class="location-name">野柳地質公園（女王頭）</span>
+            </div>
+            <div class="location-address">新北市萬里區港東路 167-1 號
+              <a href="https://www.google.com/maps/search/?api=1&query=野柳女王頭" target="_blank" class="map-link">🗺️
+                導航</a>
+            </div>
+            <div class="note">早點抵達可以避開觀光團客，與女王頭拍照更從容。</div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">11:15-13:15</span>
+              <span class="location-name">野柳海洋世界</span>
+            </div>
+            <div class="location-address">新北市萬里區港東路 167-3 號
+              <a href="https://www.google.com/maps/search/?api=1&query=野柳海洋世界" target="_blank" class="map-link">🗺️
+                導航</a>
+            </div>
+            <div class="note">就在地質公園隔壁，可觀看海豚表演，適合室內稍作休息。</div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">14:30-17:00</span>
+              <span class="location-name">平溪老街（放天燈）</span>
+            </div>
+            <div class="location-address">新北市平溪區平溪街
+              <a href="https://www.google.com/maps/search/?api=1&query=平溪老街" target="_blank" class="map-link">🗺️ 導航</a>
+            </div>
+            <div class="note">體驗在鐵軌旁施放天燈，感受山城風情。</div>
+          </div>
+
+          <div class="location-card restaurant">
+            <div class="location-header">
+              <span class="time-badge">18:30 以後</span>
+              <span class="location-name">基隆廟口夜市</span>
+            </div>
+            <div class="location-address">基隆市仁愛區仁三路
+              <a href="https://www.google.com/maps/search/?api=1&query=基隆廟口夜市" target="_blank" class="map-link">🗺️
+                導航</a>
+            </div>
+            <div class="note">晚餐推薦：營養三明治、泡泡冰、一口吃香腸。</div>
+          </div>
+
+          <div class="location-card accommodation">
+            <div class="location-header">
+              <span class="time-badge">晚上</span>
+              <span class="location-name">住宿點</span>
+            </div>
+            <div class="location-address">基隆市中正區信一路 177 號
+              <a href="https://www.google.com/maps/search/?api=1&query=基隆市中正區信一路177號" target="_blank"
+                class="map-link">🗺️ 導航</a>
+            </div>
+            <div class="note">市中心休息點，方便步行遊覽基隆港。</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="day2" class="tab-content">
+        <div class="day-section">
+          <h2 class="day-title">第二天 — 港都巡禮與返家</h2>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">09:00-10:00</span>
+              <span class="location-name">正濱漁港彩色屋</span>
+            </div>
+            <div class="location-address">基隆市中正區正濱路 72 號
+              <a href="https://www.google.com/maps/search/?api=1&query=正濱漁港彩色屋" target="_blank" class="map-link">🗺️
+                導航</a>
+            </div>
+            <div class="note">熱門打卡點！對面觀景平台是拍攝整排彩色屋的最佳位子。</div>
+          </div>
+
+          <div class="location-card">
+            <div class="location-header">
+              <span class="time-badge">10:30-</span>
+              <span class="location-name">平安返家</span>
+            </div>
+            <div class="note">結束行程，帶著滿滿回憶直接開車返回家中。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>製作日期：2026年2月25日 | 車程提醒：行車注意安全，平安回家</p>
+    </footer>
+  </div>
+
+  <script src="../js/travel.js"></script>
+</body>
+
+</html>
