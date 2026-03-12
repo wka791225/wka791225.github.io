@@ -182,6 +182,11 @@ body {
 .rm-summary strong { color: var(--text-1); }
 .rm-summary em { font-style: normal; color: var(--accent); font-weight: 600; }
 
+.rm-sub-title {
+    font-size: 0.95em; font-weight: 700; color: var(--text-1);
+    margin-bottom: 10px; letter-spacing: 0.01em;
+}
+
 .rm-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .rm-hl {
     border: 1px solid var(--border); border-radius: var(--r);
