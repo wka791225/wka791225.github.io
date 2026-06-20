@@ -305,6 +305,7 @@
             gap: 14px;
             margin-top: 30px;
         }
+        .couple { display: flex; align-items: flex-start; gap: 10px; }
         .node-del-btn {
             position: absolute; top: 0; right: -3px; z-index: 6;
             background: none; border: none; color: #e74c3c; cursor: pointer;
@@ -584,152 +585,7 @@
         </div>
         <div class="lv-row" id="row-c">
 
-            <!-- 動態新增子女會插入到此處之前（最左） -->
-
-            <!-- 三女 -->
-            <div class="node">
-                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-                <div class="pc">
-                    <input class="pc-role-input" type="text" value="三女">
-                    <div class="pc-body">
-                        <div class="pc-date">
-                            <span class="dl">亡日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-                        <div class="pc-date">
-                            <span class="dl">生日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
-                    </div>
-                </div>
-                <div class="node-children">
-                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
-                </div>
-            </div>
-
-            <!-- 次女 -->
-            <div class="node">
-                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-                <div class="pc">
-                    <input class="pc-role-input" type="text" value="次女">
-                    <div class="pc-body">
-                        <div class="pc-date">
-                            <span class="dl">亡日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-                        <div class="pc-date">
-                            <span class="dl">生日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
-                    </div>
-                </div>
-                <div class="node-children">
-                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
-                </div>
-            </div>
-
-            <!-- 長女 -->
-            <div class="node">
-                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-                <div class="pc">
-                    <input class="pc-role-input" type="text" value="長女">
-                    <div class="pc-body">
-                        <div class="pc-date">
-                            <span class="dl">亡日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-                        <div class="pc-date">
-                            <span class="dl">生日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
-                    </div>
-                </div>
-                <div class="node-children">
-                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
-                </div>
-            </div>
-
-            <!-- 次子 -->
-            <div class="node">
-                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-                <div class="pc">
-                    <input class="pc-role-input" type="text" value="次子">
-                    <div class="pc-body">
-                        <div class="pc-date">
-                            <span class="dl">亡日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-                        <div class="pc-date">
-                            <span class="dl">生日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
-                    </div>
-                </div>
-                <div class="node-children">
-                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
-                </div>
-            </div>
-
-            <!-- 長子 -->
-            <div class="node">
-                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-                <div class="pc">
-                    <input class="pc-role-input" type="text" value="長子">
-                    <div class="pc-body">
-                        <div class="pc-date">
-                            <span class="dl">亡日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-                        <div class="pc-date">
-                            <span class="dl">生日：</span>
-                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                            <input type="text" placeholder="年"><span class="unit">年</span>
-                            <input type="text" placeholder="月"><span class="unit">月</span>
-                            <input type="text" placeholder="日"><span class="unit">日</span>
-                        </div>
-                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
-                    </div>
-                </div>
-                <div class="node-children">
-                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
-                </div>
-            </div>
+            <!-- 子女節點由 initDescendants() 於載入時建立（每個含 本人＋配偶） -->
 
         </div>
     </div>
@@ -839,35 +695,42 @@
             sibCells.forEach(c => ln(c.x, topY, c.x, c.top));
         }
 
-        /* 子女以下：遞迴族譜樹，每位先人各自對自己的子女分叉 */
+        /* 子女以下：遞迴族譜樹，每對夫妻往下分叉 */
         const boxctr = pc => pc ? ctr(pc.querySelector('.pc-box-sm, .pc-box')) : null;
+        const personBoxOf = node => boxctr(node.querySelector(':scope > .couple > .pc'));  // 第一個 .pc = 本人
 
-        /* 本人 → 子女（最上層節點） */
-        const topPcs = Array.from(document.querySelectorAll('#row-c > .node > .pc'))
-            .map(boxctr).filter(Boolean);
-        if (dec && topPcs.length > 0) {
-            const barY = Math.min(...topPcs.map(c => c.top)) - 8;
+        /* 本人(死者) → 各子女「本人格」 */
+        const topPersons = Array.from(document.querySelectorAll('#row-c > .node'))
+            .map(personBoxOf).filter(Boolean);
+        if (dec && topPersons.length > 0) {
+            const barY = Math.min(...topPersons.map(c => c.top)) - 8;
             ln(dec.x, dec.bottom, dec.x, barY);
-            ln(Math.min(...topPcs.map(c => c.x)), barY, Math.max(...topPcs.map(c => c.x)), barY);
-            topPcs.forEach(c => ln(c.x, barY, c.x, c.top));
+            ln(Math.min(...topPersons.map(c => c.x)), barY, Math.max(...topPersons.map(c => c.x)), barY);
+            topPersons.forEach(c => ln(c.x, barY, c.x, c.top));
         }
 
-        /* 每個節點 → 其直接子女（涵蓋所有世代） */
+        /* 每對夫妻：婚姻線 + 由夫妻中央往下分叉到各子女本人格（涵蓋所有世代） */
         document.querySelectorAll('#row-c .node').forEach(node => {
-            const p = boxctr(node.querySelector(':scope > .pc'));
+            const couple = node.querySelector(':scope > .couple');
             const wrap = node.querySelector(':scope > .node-children');
-            if (!p || !wrap) return;
-            const kids = Array.from(wrap.querySelectorAll(':scope > .node > .pc'))
-                .map(boxctr).filter(Boolean);
+            if (!couple || !wrap) return;
+            const cells = Array.from(couple.querySelectorAll(':scope > .pc')).map(ctr).filter(Boolean);
+            if (cells.length < 2) return;
+            const my = (cells[0].top + cells[0].bottom) / 2;       // 婚姻線高度
+            const trunkX = (cells[0].right + cells[1].left) / 2;   // 夫妻間距中央
+            ln(cells[0].right, my, cells[1].left, my);             // 婚姻連線
+
+            const kids = Array.from(wrap.querySelectorAll(':scope > .node'))
+                .map(personBoxOf).filter(Boolean);
             if (!kids.length) return;
             const barY = Math.min(...kids.map(k => k.top)) - 8;
-            ln(p.x, p.bottom, p.x, barY);
-            ln(Math.min(p.x, ...kids.map(k => k.x)), barY, Math.max(p.x, ...kids.map(k => k.x)), barY);
+            ln(trunkX, my, trunkX, barY);                          // 由婚姻中央往下
+            ln(Math.min(trunkX, ...kids.map(k => k.x)), barY, Math.max(trunkX, ...kids.map(k => k.x)), barY);
             kids.forEach(k => ln(k.x, barY, k.x, k.top));
         });
     }
 
-    window.addEventListener('load', drawLines);
+    window.addEventListener('load', () => { initDescendants(); drawLines(); });
     window.addEventListener('resize', drawLines);
 
     /* ── Level Toggle ── */
@@ -906,13 +769,20 @@
         <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>`;
     }
 
-    function nodeInnerHTML(role) {
+    function personCellHTML(role) {
         const roleAttr = role ? `value="${role}"` : 'placeholder="稱謂"';
-        return `
-            <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
-            <div class="pc">
+        return `<div class="pc">
                 <input class="pc-role-input" type="text" ${roleAttr}>
                 <div class="pc-body">${makeChildDateCols()}</div>
+            </div>`;
+    }
+
+    function nodeInnerHTML(role) {
+        return `
+            <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+            <div class="couple">
+                ${personCellHTML(role)}
+                ${personCellHTML('配偶')}
             </div>
             <div class="node-children">
                 <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
@@ -924,6 +794,11 @@
         n.className = 'node';
         n.innerHTML = nodeInnerHTML(role);
         return n;
+    }
+
+    function initDescendants() {
+        const rowC = document.getElementById('row-c');
+        ['三女', '次女', '長女', '次子', '長子'].forEach(r => rowC.appendChild(makeNode(r)));
     }
 
     // 新增子女（最上層，插到最左）
