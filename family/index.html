@@ -697,7 +697,7 @@
 
         /* 子女以下：遞迴族譜樹，每對夫妻往下分叉 */
         const boxctr = pc => pc ? ctr(pc.querySelector('.pc-box-sm, .pc-box')) : null;
-        const personBoxOf = node => boxctr(node.querySelector(':scope > .couple > .pc'));  // 第一個 .pc = 本人
+        const personBoxOf = node => boxctr(node.querySelector(':scope > .couple > .pc-self'));  // 本人格（配偶在左、本人在右）
 
         /* 本人(死者) → 各子女「本人格」 */
         const topPersons = Array.from(document.querySelectorAll('#row-c > .node'))
@@ -769,9 +769,9 @@
         <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>`;
     }
 
-    function personCellHTML(role) {
+    function personCellHTML(role, cls) {
         const roleAttr = role ? `value="${role}"` : 'placeholder="稱謂"';
-        return `<div class="pc">
+        return `<div class="pc${cls ? ' ' + cls : ''}">
                 <input class="pc-role-input" type="text" ${roleAttr}>
                 <div class="pc-body">${makeChildDateCols()}</div>
             </div>`;
@@ -781,8 +781,8 @@
         return `
             <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
             <div class="couple">
-                ${personCellHTML(role)}
                 ${personCellHTML('配偶')}
+                ${personCellHTML(role, 'pc-self')}
             </div>
             <div class="node-children">
                 <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
