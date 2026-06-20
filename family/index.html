@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>親屬繼承系統表</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+            background: #f5f1eb;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Nav ── */
+        .fam-nav {
+            position: fixed; top: 0; left: 0; right: 0; height: 56px;
+            background: #fff; border-bottom: 2px solid #d4c9b5;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 28px; z-index: 200;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .fam-back { text-decoration: none; color: #5b6abf; font-size: 0.9em; font-weight: 500; }
+        .fam-back:hover { opacity: 0.7; }
+        .fam-title { font-size: 1em; font-weight: 700; color: #1a1a2e; }
+        .fam-print-btn {
+            background: #5b6abf; color: #fff; border: none;
+            border-radius: 6px; padding: 8px 18px; font-size: 0.88em;
+            font-family: inherit; cursor: pointer;
+        }
+        .fam-print-btn:hover { background: #4a59ae; }
+
+        /* ── Main scrollable ── */
+        .fam-main {
+            position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+            overflow: auto; background: #f5f1eb; padding: 24px;
+        }
+
+        /* ── Chart container ── */
+        .chart-outer {
+            min-width: fit-content;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 28px 72px 36px 36px;  /* right padding for row labels */
+            position: relative;
+        }
+
+        /* SVG overlay for connecting lines */
+        #chart-svg {
+            position: absolute;
+            top: 0; left: 0;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        /* Title */
+        .chart-title {
+            text-align: center;
+            font-size: 1.6em;
+            letter-spacing: 0.5em;
+            border: 2px solid #000;
+            padding: 8px 28px;
+            display: table;
+            margin: 0 auto 24px;
+        }
+
+        /* Section container */
+        .sec {
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        /* Section header */
+        .sec-title {
+            text-align: center;
+            font-size: 0.95em;
+            color: #333;
+            padding: 5px 0 3px;
+            border-top: 1px solid #bbb;
+            margin-bottom: 5px;
+        }
+
+        /* Row of person cells */
+        .lv-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        /* Spacer between groups */
+        .pc-gap { flex-shrink: 0; }
+
+        /* ── Person Cell ── */
+        .pc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .pc-role {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.95em;
+            font-weight: bold;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+        .pc-role-input {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            height: 64px;
+            width: 24px;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.95em;
+            font-weight: bold;
+            text-align: center;
+            cursor: text;
+        }
+
+        .pc-body {
+            display: flex;
+            border: 1.5px solid #333;
+        }
+
+        /* Photo / stamp box */
+        .pc-box {
+            width: 72px;
+            min-height: 140px;
+            border-left: 1.5px solid #333;
+            border-right: 1.5px solid #333;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .pc-box-sm {
+            width: 62px;
+            min-height: 110px;
+            border-left: 1.5px solid #333;
+            border-right: 1.5px solid #333;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .name-input {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            height: 80px;
+            width: 1.1em;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 3px 2px;
+            color: #1a1a2e;
+            font-family: inherit;
+            font-size: 0.9em;
+            text-align: center;
+            cursor: text;
+        }
+
+        /* Date column */
+        .pc-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 34px;
+            padding: 4px 2px;
+            gap: 2px;
+        }
+        .pc-date .dl {
+            writing-mode: vertical-rl;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+        .pc-date .era {
+            writing-mode: vertical-rl;
+            width: 22px;
+            height: 52px;
+            border: 1px solid #999;
+            font-size: 0.75em;
+            font-family: inherit;
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: center;
+            padding: 0;
+            text-align-last: center;
+        }
+        .pc-date input {
+            width: 28px;
+            height: 20px;
+            border: 1px solid #aaa;
+            text-align: center;
+            font-size: 0.75em;
+            padding: 0;
+            font-family: inherit;
+        }
+        .pc-date .unit {
+            font-size: 0.75em;
+        }
+
+        /* Sub-column inside body (出生別, 姓) — right of 生日 */
+        .pc-sub {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 0.85em;
+            padding: 4px 3px;
+            border-left: 1px solid #aaa;
+        }
+        .pc-sub input {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            width: 1.2em;
+            height: 36px;
+            border: 1px solid #aaa;
+            font-family: inherit;
+            font-size: 1em;
+            padding: 2px 0;
+            text-align: center;
+        }
+
+        /* Spacer between level rows */
+        .lv-spacer { height: 30px; }
+
+
+        /* Level toggle row */
+        .sec-toggle-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 3px;
+            margin-bottom: 2px;
+        }
+        /* Unified level add button */
+        .lv-add-btn {
+            font-size: 0.65em;
+            padding: 2px 7px;
+            background: #f0f3ff;
+            border: 1px solid #5b6abf;
+            border-radius: 3px;
+            cursor: pointer;
+            color: #5b6abf;
+            white-space: nowrap;
+        }
+        .lv-add-btn:hover { background: #dde3ff; }
+        .lv-toggle-btn {
+            font-size: 0.65em;
+            padding: 2px 7px;
+            background: #f0f3ff;
+            border: 1px solid #5b6abf;
+            border-radius: 3px;
+            cursor: pointer;
+            color: #5b6abf;
+            white-space: nowrap;
+        }
+        .lv-toggle-btn:hover { background: #dde3ff; }
+
+        /* Delete button on dynamic siblings */
+        .del-btn {
+            position: absolute;
+            top: 0; right: -1px;
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 0.6em;
+            padding: 1px 2px;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        /* ── Recursive descendant tree (子女以下) ── */
+        .node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .node-children {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 14px;
+            margin-top: 30px;
+        }
+        .node-del-btn {
+            position: absolute; top: 0; right: -3px; z-index: 6;
+            background: none; border: none; color: #e74c3c; cursor: pointer;
+            font-size: 0.6em; padding: 1px 2px; line-height: 1;
+        }
+        .add-desc-btn {
+            margin-top: 40px; flex-shrink: 0;
+            width: 22px; height: 44px; padding: 0;
+            display: flex; align-items: center; justify-content: center;
+            border: 1.5px dashed #5b6abf; border-radius: 4px;
+            background: #f0f3ff; color: #5b6abf; font-size: 1.1em; cursor: pointer;
+        }
+        .add-desc-btn:hover { background: #dde3ff; }
+
+        /* Add-new-generation row (always at chart bottom) */
+        .add-level-row { display: flex; justify-content: center; margin-top: 20px; }
+        .add-level-btn {
+            font-size: 0.8em; padding: 6px 16px;
+            background: #5b6abf; color: #fff; border: none; border-radius: 6px;
+            cursor: pointer; font-family: inherit;
+        }
+        .add-level-btn:hover { background: #4a59ae; }
+
+        /* ── Print ── */
+        @media print {
+            .fam-nav { display: none; }
+            body { overflow: visible; height: auto; background: #fff; }
+            .fam-main {
+                position: static; overflow: visible;
+                padding: 8px; background: #fff;
+            }
+            .chart-outer { box-shadow: none; border-radius: 0; padding: 12px 56px 12px 12px; }
+            .lv-add-btn, .add-desc-btn, .node-del-btn, .add-level-row,
+            .del-btn, .sec-toggle-row { display: none !important; }
+            input, select {
+                border: 1px solid #333 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            #chart-svg { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="fam-nav">
+    <a href="../index.html" class="fam-back">← 返回首頁</a>
+    <span class="fam-title">親屬繼承系統表</span>
+    <button class="fam-print-btn" id="print-btn">🖨️ 列印</button>
+</nav>
+
+<main class="fam-main">
+<div class="chart-outer" id="chart-outer">
+
+    <!-- SVG overlay for connecting lines -->
+    <svg id="chart-svg" style="position:absolute;top:0;left:0;pointer-events:none;"></svg>
+
+    <h1 class="chart-title">親 屬 繼 承 系 統 表</h1>
+
+    <!-- ═══ 第四順位：祖父母 ═══ -->
+    <div class="sec" id="sec-gp">
+        <div class="sec-toggle-row"><button class="lv-toggle-btn" onclick="toggleLevel(this)">▲ 收合</button></div>
+        <div class="lv-row" id="row-gp">
+            <!-- 外祖母 -->
+            <div class="pc" id="c-wgm">
+                <input class="pc-role-input" type="text" value="外祖母">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 外祖父 -->
+            <div class="pc" id="c-wgf">
+                <input class="pc-role-input" type="text" value="外祖父">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pc-gap" style="width:32px"></div>
+
+            <!-- 祖母 -->
+            <div class="pc" id="c-pgm">
+                <input class="pc-role-input" type="text" value="祖母">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 祖父 -->
+            <div class="pc" id="c-pgf">
+                <input class="pc-role-input" type="text" value="祖父">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lv-spacer"></div>
+
+    <!-- ═══ 第二順位：父母 ═══ -->
+    <div class="sec" id="sec-p">
+        <div class="sec-toggle-row"><button class="lv-toggle-btn" onclick="toggleLevel(this)">▲ 收合</button></div>
+        <div class="lv-row" id="row-p">
+            <!-- 母親 -->
+            <div class="pc" id="c-mom">
+                <input class="pc-role-input" type="text" value="母親">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pc-gap" style="width:80px"></div>
+
+            <!-- 父親 -->
+            <div class="pc" id="c-dad">
+                <input class="pc-role-input" type="text" value="父親">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lv-spacer"></div>
+
+    <!-- ═══ 第三順位：兄弟姐妹 ═══ -->
+    <div class="sec" id="sec-s">
+        <div class="sec-toggle-row">
+            <button class="lv-toggle-btn" onclick="toggleLevel(this)">▲ 收合</button>
+            <button class="lv-add-btn" onclick="addSibling()" title="新增兄弟姊妹">＋ 新增兄弟姊妹</button>
+        </div>
+        <div class="lv-row" id="row-s">
+
+            <!-- 動態新增區（由右往左加入） -->
+            <div id="dynamic-siblings" style="display:flex;gap:6px;align-items:flex-start;flex-direction:row-reverse;"></div>
+
+            <!-- 固定：配偶 -->
+            <div class="pc" id="c-spouse">
+                <input class="pc-role-input" type="text" value="配偶">
+                <div class="pc-body">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 固定：本人 -->
+            <div class="pc" id="c-dec">
+                <input class="pc-role-input" type="text" value="本人" style="color:#c00">
+                <div class="pc-body" style="border-color:#c00">
+                    <div class="pc-date">
+                        <span class="dl">亡日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                    <div class="pc-box" style="border-color:#c00"><input type="text" class="name-input" placeholder="姓名" style="color:#c00"></div>
+                    <div class="pc-date">
+                        <span class="dl">生日：</span>
+                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                        <input type="text" placeholder="年"><span class="unit">年</span>
+                        <input type="text" placeholder="月"><span class="unit">月</span>
+                        <input type="text" placeholder="日"><span class="unit">日</span>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+
+    <div class="lv-spacer"></div>
+
+    <!-- ═══ 第一順位：子女 ═══ -->
+    <div class="sec" id="sec-c">
+        <div class="sec-toggle-row">
+            <button class="lv-toggle-btn" onclick="toggleLevel(this)">▲ 收合</button>
+            <button class="lv-add-btn" onclick="addChild()" title="新增子女">＋ 新增子女</button>
+        </div>
+        <div class="lv-row" id="row-c">
+
+            <!-- 動態新增子女會插入到此處之前（最左） -->
+
+            <!-- 三女 -->
+            <div class="node">
+                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+                <div class="pc">
+                    <input class="pc-role-input" type="text" value="三女">
+                    <div class="pc-body">
+                        <div class="pc-date">
+                            <span class="dl">亡日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+                        <div class="pc-date">
+                            <span class="dl">生日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+                </div>
+            </div>
+
+            <!-- 次女 -->
+            <div class="node">
+                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+                <div class="pc">
+                    <input class="pc-role-input" type="text" value="次女">
+                    <div class="pc-body">
+                        <div class="pc-date">
+                            <span class="dl">亡日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+                        <div class="pc-date">
+                            <span class="dl">生日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+                </div>
+            </div>
+
+            <!-- 長女 -->
+            <div class="node">
+                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+                <div class="pc">
+                    <input class="pc-role-input" type="text" value="長女">
+                    <div class="pc-body">
+                        <div class="pc-date">
+                            <span class="dl">亡日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+                        <div class="pc-date">
+                            <span class="dl">生日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+                </div>
+            </div>
+
+            <!-- 次子 -->
+            <div class="node">
+                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+                <div class="pc">
+                    <input class="pc-role-input" type="text" value="次子">
+                    <div class="pc-body">
+                        <div class="pc-date">
+                            <span class="dl">亡日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+                        <div class="pc-date">
+                            <span class="dl">生日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+                </div>
+            </div>
+
+            <!-- 長子 -->
+            <div class="node">
+                <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+                <div class="pc">
+                    <input class="pc-role-input" type="text" value="長子">
+                    <div class="pc-body">
+                        <div class="pc-date">
+                            <span class="dl">亡日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+                        <div class="pc-date">
+                            <span class="dl">生日：</span>
+                            <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
+                            <input type="text" placeholder="年"><span class="unit">年</span>
+                            <input type="text" placeholder="月"><span class="unit">月</span>
+                            <input type="text" placeholder="日"><span class="unit">日</span>
+                        </div>
+                        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>
+                    </div>
+                </div>
+                <div class="node-children">
+                    <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 新增世代會讓每個最末代各長出一位子女 -->
+    <div class="add-level-row" id="add-level-row">
+        <button class="add-level-btn" onclick="addGeneration()">＋ 新增世代</button>
+    </div>
+
+</div><!-- chart-outer -->
+</main>
+
+<script>
+    /* ── Print ── */
+    document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+    /* ── SVG Connecting Lines ── */
+    function drawLines() {
+        const outer = document.getElementById('chart-outer');
+        const svg = document.getElementById('chart-svg');
+        const R = outer.getBoundingClientRect();
+
+        svg.setAttribute('width', R.width);
+        svg.setAttribute('height', R.height);
+        svg.innerHTML = '';
+
+        function ctr(el) {
+            if (!el) return null;
+            const r = el.getBoundingClientRect();
+            if (r.width === 0 && r.height === 0) return null;  // 隱藏元素，跳過
+            return {
+                x:  r.left - R.left + r.width  / 2,
+                y:  r.top  - R.top  + r.height / 2,
+                top:    r.top    - R.top,
+                bottom: r.bottom - R.top,
+                left:   r.left   - R.left,
+                right:  r.right  - R.left,
+            };
+        }
+
+        function ln(x1, y1, x2, y2) {
+            const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            l.setAttribute('x1', x1); l.setAttribute('y1', y1);
+            l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+            l.setAttribute('stroke', '#000');
+            l.setAttribute('stroke-width', '1.2');
+            svg.appendChild(l);
+        }
+
+        /* Grandparents → Parents */
+        const wgm = ctr(document.querySelector('#c-wgm .pc-box'));
+        const wgf = ctr(document.querySelector('#c-wgf .pc-box'));
+        const pgm = ctr(document.querySelector('#c-pgm .pc-box'));
+        const pgf = ctr(document.querySelector('#c-pgf .pc-box'));
+        const mom = ctr(document.querySelector('#c-mom .pc-box'));
+        const dad = ctr(document.querySelector('#c-dad .pc-box'));
+
+        if (wgm && wgf && mom) {
+            const midY = (wgm.bottom + mom.top) / 2;
+            ln(wgm.x, wgm.bottom, wgm.x, midY);
+            ln(wgf.x, wgf.bottom, wgf.x, midY);
+            ln(wgm.x, midY, wgf.x, midY);
+            const matMidX = (wgm.x + wgf.x) / 2;
+            ln(matMidX, midY, matMidX, mom.top);
+            ln(matMidX, mom.top, mom.x, mom.top);
+        }
+
+        if (pgm && pgf && dad) {
+            const midY = (pgm.bottom + dad.top) / 2;
+            ln(pgm.x, pgm.bottom, pgm.x, midY);
+            ln(pgf.x, pgf.bottom, pgf.x, midY);
+            ln(pgm.x, midY, pgf.x, midY);
+            const patMidX = (pgm.x + pgf.x) / 2;
+            ln(patMidX, midY, patMidX, dad.top);
+            ln(patMidX, dad.top, dad.x, dad.top);
+        }
+
+        /* Parents → Deceased */
+        const dec = ctr(document.querySelector('#c-dec .pc-box'));
+
+        if (mom && dad && dec) {
+            const midY = (Math.max(mom.bottom, dad.bottom) + dec.top) / 2;
+            ln(mom.x, mom.bottom, mom.x, midY);
+            ln(dad.x, dad.bottom, dad.x, midY);
+            ln(mom.x, midY, dad.x, midY);
+            const pMidX = (mom.x + dad.x) / 2;
+            ln(pMidX, midY, pMidX, dec.top);
+            ln(pMidX, dec.top, dec.x, dec.top);
+        }
+
+        /* Siblings horizontal bar (connects all sibling cells at their top) */
+        const sibCells = [
+            document.querySelector('#c-s1 .pc-box'),
+            document.querySelector('#c-s2 .pc-box'),
+            document.querySelector('#c-dec .pc-box'),
+            document.querySelector('#c-spouse .pc-box'),
+            document.querySelector('#c-heir .pc-box'),
+        ].concat(
+            Array.from(document.querySelectorAll('#dynamic-siblings .pc-box'))
+        ).map(el => ctr(el)).filter(Boolean);
+
+        if (sibCells.length > 1 && dec) {
+            const topY = sibCells[0].top - 6;
+            const leftmost = Math.min(...sibCells.map(c => c.x));
+            const rightmost = Math.max(...sibCells.map(c => c.x));
+            ln(leftmost, topY, rightmost, topY);
+            sibCells.forEach(c => ln(c.x, topY, c.x, c.top));
+        }
+
+        /* 子女以下：遞迴族譜樹，每位先人各自對自己的子女分叉 */
+        const boxctr = pc => pc ? ctr(pc.querySelector('.pc-box-sm, .pc-box')) : null;
+
+        /* 本人 → 子女（最上層節點） */
+        const topPcs = Array.from(document.querySelectorAll('#row-c > .node > .pc'))
+            .map(boxctr).filter(Boolean);
+        if (dec && topPcs.length > 0) {
+            const barY = Math.min(...topPcs.map(c => c.top)) - 8;
+            ln(dec.x, dec.bottom, dec.x, barY);
+            ln(Math.min(...topPcs.map(c => c.x)), barY, Math.max(...topPcs.map(c => c.x)), barY);
+            topPcs.forEach(c => ln(c.x, barY, c.x, c.top));
+        }
+
+        /* 每個節點 → 其直接子女（涵蓋所有世代） */
+        document.querySelectorAll('#row-c .node').forEach(node => {
+            const p = boxctr(node.querySelector(':scope > .pc'));
+            const wrap = node.querySelector(':scope > .node-children');
+            if (!p || !wrap) return;
+            const kids = Array.from(wrap.querySelectorAll(':scope > .node > .pc'))
+                .map(boxctr).filter(Boolean);
+            if (!kids.length) return;
+            const barY = Math.min(...kids.map(k => k.top)) - 8;
+            ln(p.x, p.bottom, p.x, barY);
+            ln(Math.min(p.x, ...kids.map(k => k.x)), barY, Math.max(p.x, ...kids.map(k => k.x)), barY);
+            kids.forEach(k => ln(k.x, barY, k.x, k.top));
+        });
+    }
+
+    window.addEventListener('load', drawLines);
+    window.addEventListener('resize', drawLines);
+
+    /* ── Level Toggle ── */
+    function toggleLevel(btn) {
+        const sec = btn.closest('.sec');
+        const row = sec.querySelector('.lv-row');
+        const prevEl = sec.previousElementSibling;
+        const isCollapsed = row.style.display === 'none';
+        row.style.display = isCollapsed ? '' : 'none';
+        if (prevEl && prevEl.classList.contains('lv-spacer')) {
+            prevEl.style.display = isCollapsed ? '' : 'none';
+        }
+        btn.textContent = isCollapsed ? '▲ 收合' : '▼ 展開';
+        requestAnimationFrame(drawLines);
+    }
+
+    /* ── 子女/子孫 樹狀節點 ── */
+    function makeChildDateCols() {
+        const eraOpts = '<option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option>';
+        return `
+        <div class="pc-date">
+            <span class="dl">亡日：</span>
+            <select class="era">${eraOpts}</select>
+            <input type="text" placeholder="年"><span class="unit">年</span>
+            <input type="text" placeholder="月"><span class="unit">月</span>
+            <input type="text" placeholder="日"><span class="unit">日</span>
+        </div>
+        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
+        <div class="pc-date">
+            <span class="dl">生日：</span>
+            <select class="era">${eraOpts}</select>
+            <input type="text" placeholder="年"><span class="unit">年</span>
+            <input type="text" placeholder="月"><span class="unit">月</span>
+            <input type="text" placeholder="日"><span class="unit">日</span>
+        </div>
+        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>`;
+    }
+
+    function nodeInnerHTML(role) {
+        const roleAttr = role ? `value="${role}"` : 'placeholder="稱謂"';
+        return `
+            <button class="node-del-btn" onclick="delDescendant(this)" title="刪除">✕</button>
+            <div class="pc">
+                <input class="pc-role-input" type="text" ${roleAttr}>
+                <div class="pc-body">${makeChildDateCols()}</div>
+            </div>
+            <div class="node-children">
+                <button class="add-desc-btn" onclick="addDescendant(this)" title="新增子女">＋</button>
+            </div>`;
+    }
+
+    function makeNode(role) {
+        const n = document.createElement('div');
+        n.className = 'node';
+        n.innerHTML = nodeInnerHTML(role);
+        return n;
+    }
+
+    // 新增子女（最上層，插到最左）
+    function addChild() {
+        const rowC = document.getElementById('row-c');
+        rowC.insertBefore(makeNode(''), rowC.firstElementChild);
+        requestAnimationFrame(drawLines);
+    }
+
+    // 對某人新增一位子女
+    function addDescendant(btn) {
+        const wrap = btn.parentNode;            // .node-children
+        wrap.insertBefore(makeNode(''), btn);   // 插到 ＋ 之前
+        requestAnimationFrame(drawLines);
+    }
+
+    // 刪除某人（含其子樹）
+    function delDescendant(btn) {
+        btn.closest('.node').remove();
+        requestAnimationFrame(drawLines);
+    }
+
+    // 新增世代：每個最末代（葉節點）各加一位子女 → 整棵樹往下長一層
+    function addGeneration() {
+        const leaves = Array.from(document.querySelectorAll('#row-c .node'))
+            .filter(n => !n.querySelector(':scope > .node-children > .node'));
+        leaves.forEach(leaf => {
+            const wrap = leaf.querySelector(':scope > .node-children');
+            const addBtn = wrap.querySelector(':scope > .add-desc-btn');
+            wrap.insertBefore(makeNode(''), addBtn);
+        });
+        requestAnimationFrame(drawLines);
+    }
+
+    /* ── Dynamic Sibling ── */
+    let sibCount = 0;
+
+    function makeDateCols() {
+        const eraOpts = '<option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option>';
+        return `
+        <div class="pc-date">
+            <span class="dl">亡日：</span>
+            <select class="era">${eraOpts}</select>
+            <input type="text" placeholder="年"><span class="unit">年</span>
+            <input type="text" placeholder="月"><span class="unit">月</span>
+            <input type="text" placeholder="日"><span class="unit">日</span>
+        </div>
+        <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
+        <div class="pc-date">
+            <span class="dl">生日：</span>
+            <select class="era">${eraOpts}</select>
+            <input type="text" placeholder="年"><span class="unit">年</span>
+            <input type="text" placeholder="月"><span class="unit">月</span>
+            <input type="text" placeholder="日"><span class="unit">日</span>
+        </div>`;
+    }
+
+    function addSibling() {
+        sibCount++;
+        const container = document.getElementById('dynamic-siblings');
+        const div = document.createElement('div');
+        div.className = 'pc';
+        div.style.position = 'relative';
+        div.innerHTML = `
+            <button class="del-btn" onclick="removeSibling(this)" title="刪除">✕</button>
+            <input class="pc-role-input" type="text" placeholder="稱謂">
+            <div class="pc-body">${makeDateCols()}</div>`;
+        container.appendChild(div);
+        requestAnimationFrame(drawLines);
+    }
+
+    function removeSibling(btn) {
+        btn.closest('.pc').remove();
+        requestAnimationFrame(drawLines);
+    }
+</script>
+</body>
+</html>
