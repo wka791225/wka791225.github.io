@@ -174,72 +174,6 @@
             cursor: text;
         }
 
-        /* Date column */
-        .pc-date {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 34px;
-            padding: 4px 2px;
-            gap: 2px;
-        }
-        .pc-date .dl {
-            writing-mode: vertical-rl;
-            font-size: 0.85em;
-            white-space: nowrap;
-        }
-        .pc-date .era {
-            writing-mode: vertical-rl;
-            width: 22px;
-            height: 52px;
-            border: 1px solid #999;
-            font-size: 0.75em;
-            font-family: inherit;
-            appearance: none;
-            -webkit-appearance: none;
-            background: transparent;
-            cursor: pointer;
-            text-align: center;
-            padding: 0;
-            text-align-last: center;
-        }
-        .pc-date input {
-            width: 28px;
-            height: 20px;
-            border: 1px solid #aaa;
-            text-align: center;
-            font-size: 0.75em;
-            padding: 0;
-            font-family: inherit;
-        }
-        .pc-date .unit {
-            font-size: 0.75em;
-        }
-
-        /* Sub-column inside body (出生別, 姓) — right of 生日 */
-        .pc-sub {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            font-size: 0.85em;
-            padding: 4px 3px;
-            border-left: 1px solid #aaa;
-        }
-        .pc-sub input {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            width: 1.2em;
-            height: 36px;
-            border: 1px solid #aaa;
-            font-family: inherit;
-            font-size: 1em;
-            padding: 2px 0;
-            text-align: center;
-        }
-
         /* Spacer between level rows */
         .lv-spacer { height: 30px; }
 
@@ -372,30 +306,14 @@
             <div class="pc" id="c-wgm">
                 <input class="pc-role-input" type="text" value="外祖母">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
 
             <!-- 外祖父 -->
             <div class="pc" id="c-wgf">
                 <input class="pc-role-input" type="text" value="外祖父">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
 
             <div class="pc-gap" style="width:32px"></div>
@@ -404,30 +322,14 @@
             <div class="pc" id="c-pgm">
                 <input class="pc-role-input" type="text" value="祖母">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
 
             <!-- 祖父 -->
             <div class="pc" id="c-pgf">
                 <input class="pc-role-input" type="text" value="祖父">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
         </div>
     </div>
@@ -442,15 +344,7 @@
             <div class="pc" id="c-mom">
                 <input class="pc-role-input" type="text" value="母親">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
 
             <div class="pc-gap" style="width:80px"></div>
@@ -459,15 +353,7 @@
             <div class="pc" id="c-dad">
                 <input class="pc-role-input" type="text" value="父親">
                 <div class="pc-body">
-                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>                </div>
             </div>
         </div>
     </div>
@@ -489,15 +375,7 @@
             <div class="pc" id="c-dec">
                 <input class="pc-role-input" type="text" value="本人" style="color:#c00">
                 <div class="pc-body" style="border-color:#c00">
-                    <div class="pc-box" style="border-color:#c00"><input type="text" class="name-input" placeholder="姓名" style="color:#c00"></div>
-                    <div class="pc-date">
-                        <span class="dl">生日：</span>
-                        <select class="era"><option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option></select>
-                        <input type="text" placeholder="年"><span class="unit">年</span>
-                        <input type="text" placeholder="月"><span class="unit">月</span>
-                        <input type="text" placeholder="日"><span class="unit">日</span>
-                    </div>
-                </div>
+                    <div class="pc-box" style="border-color:#c00"><input type="text" class="name-input" placeholder="姓名" style="color:#c00"></div>                </div>
             </div>
 
 
@@ -668,17 +546,8 @@
 
     /* ── 子女/子孫 樹狀節點 ── */
     function makeChildDateCols() {
-        const eraOpts = '<option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option>';
         return `
-        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>
-        <div class="pc-date">
-            <span class="dl">生日：</span>
-            <select class="era">${eraOpts}</select>
-            <input type="text" placeholder="年"><span class="unit">年</span>
-            <input type="text" placeholder="月"><span class="unit">月</span>
-            <input type="text" placeholder="日"><span class="unit">日</span>
-        </div>
-        <div class="pc-sub"><span>出生別</span><input type="text"><span>姓</span><input type="text"></div>`;
+        <div class="pc-box-sm"><input type="text" class="name-input" placeholder="姓名"></div>`;
     }
 
     function personCellHTML(role, cls) {
@@ -746,16 +615,8 @@
     let sibCount = 0;
 
     function makeDateCols() {
-        const eraOpts = '<option value="">─</option><option>民國</option><option>民國前</option><option>大正</option><option>昭和</option>';
         return `
-        <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>
-        <div class="pc-date">
-            <span class="dl">生日：</span>
-            <select class="era">${eraOpts}</select>
-            <input type="text" placeholder="年"><span class="unit">年</span>
-            <input type="text" placeholder="月"><span class="unit">月</span>
-            <input type="text" placeholder="日"><span class="unit">日</span>
-        </div>`;
+        <div class="pc-box"><input type="text" class="name-input" placeholder="姓名"></div>`;
     }
 
     function addSibling() {
